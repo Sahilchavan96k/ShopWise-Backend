@@ -1,0 +1,70 @@
+package com.sahil.Service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.sahil.Entity.User;
+import com.sahil.Exception.ResourceNotFoundException;
+import com.sahil.Repo.UserRepo;
+
+@Service
+public class UserService {
+
+    @Autowired
+    private UserRepo userRepo;
+
+    public User saveUser(
+            User user) { 	
+
+        return userRepo.save(user);
+    }
+
+    public List<User> getAllUsers() {
+
+        return userRepo.findAll();
+    }
+
+    public User getUserById(
+            Long id) {
+
+        return userRepo.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "User Not Found"));
+    }
+
+    public User updateUser(
+            Long id,
+            User user) {
+
+        User existingUser =
+                getUserById(id);
+
+        existingUser.setFullName(
+                user.getFullName());
+
+        existingUser.setEmail(
+                user.getEmail());
+
+        existingUser.setPassword(
+                user.getPassword());
+
+        existingUser.setRole(
+                user.getRole());
+
+        return userRepo.save(
+                existingUser);
+    }
+
+    public void deleteUser(
+            Long id) {
+
+        User user =
+                getUserById(id);
+
+        userRepo.delete(user);
+    }
+
+}
