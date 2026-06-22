@@ -4,12 +4,11 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.sahil.Entity.Order;
+import com.sahil.Entity.Cart;
 
-public interface OrderRepo
-        extends JpaRepository<Order, Long> {
+public interface CartRepo
+        extends JpaRepository<Cart, Long> {
 
-    List<Order> findByUserId(
+    List<Cart> findByUserId(
             Long userId);
-
 }

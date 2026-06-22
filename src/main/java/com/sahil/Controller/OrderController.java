@@ -20,7 +20,8 @@ public class OrderController {
     public Order addOrder(
             @RequestBody Order order) {
 
-        return orderService.saveOrder(order);
+        return orderService.saveOrder(
+                order);
     }
 
     @GetMapping
@@ -33,7 +34,16 @@ public class OrderController {
     public Order getOrderById(
             @PathVariable Long id) {
 
-        return orderService.getOrderById(id);
+        return orderService.getOrderById(
+                id);
+    }
+
+    @GetMapping("/user/{userId}")
+    public List<Order> getOrdersByUserId(
+            @PathVariable Long userId) {
+
+        return orderService.getOrdersByUserId(
+                userId);
     }
 
     @PutMapping("/{id}")
@@ -46,11 +56,22 @@ public class OrderController {
                 order);
     }
 
+    @PutMapping("/{id}/status")
+    public Order updateStatus(
+            @PathVariable Long id,
+            @RequestParam String status) {
+
+        return orderService.updateStatus(
+                id,
+                status);
+    }
+
     @DeleteMapping("/{id}")
     public String deleteOrder(
             @PathVariable Long id) {
 
-        orderService.deleteOrder(id);
+        orderService.deleteOrder(
+                id);
 
         return "Order Deleted Successfully";
     }

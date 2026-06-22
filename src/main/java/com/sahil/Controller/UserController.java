@@ -1,7 +1,7 @@
 package com.sahil.Controller;
 
 import java.util.List;
-
+import com.sahil.Entity.LoginRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,6 +55,15 @@ public class UserController {
         userService.deleteUser(id);
 
         return "User Deleted Successfully";
+    }
+    
+    @PostMapping("/login")
+    public User loginUser(
+            @RequestBody LoginRequest request) {
+
+        return userService.loginUser(
+                request.getEmail(),
+                request.getPassword());
     }
 
 }

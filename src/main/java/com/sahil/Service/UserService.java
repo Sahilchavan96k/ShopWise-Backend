@@ -15,8 +15,13 @@ public class UserService {
     @Autowired
     private UserRepo userRepo;
 
-    public User saveUser(
-            User user) { 	
+    public User saveUser(User user) {
+
+        if(userRepo.existsByEmail(user.getEmail())) {
+
+            throw new RuntimeException(
+                    "Email already registered");
+        }
 
         return userRepo.save(user);
     }
@@ -65,6 +70,26 @@ public class UserService {
                 getUserById(id);
 
         userRepo.delete(user);
+    }
+    
+    public User loginUser(
+            String email,
+            String password) {
+
+        User user =
+                userRepo.findByEmail(email)
+                        .orElseThrow(() ->
+                                new ResourceNotFoundException(
+                                        "Invalid Email"));
+
+        if (!user.getPassword()
+                .equals(password)) {
+
+            throw new RuntimeException(
+                    "Invalid Password");
+        }
+
+        return user;
     }
 
 }

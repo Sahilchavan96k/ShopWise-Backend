@@ -1,5 +1,7 @@
 package com.sahil.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,18 +17,23 @@ import lombok.Data;
 public class OrderItem {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(
+            strategy =
+            GenerationType.IDENTITY)
     private Long id;
 
     private Integer quantity;
 
     private Double price;
 
+    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "order_id")
+    @JoinColumn(
+            name = "order_id")
     private Order order;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(
+            name = "product_id")
     private Product product;
 }

@@ -18,12 +18,20 @@ public class OrderService {
     public Order saveOrder(
             Order order) {
 
-        return orderRepo.save(order);
+        return orderRepo.save(
+                order);
     }
 
     public List<Order> getAllOrders() {
 
         return orderRepo.findAll();
+    }
+
+    public List<Order> getOrdersByUserId(
+            Long userId) {
+
+        return orderRepo.findByUserId(
+                userId);
     }
 
     public Order getOrderById(
@@ -52,12 +60,27 @@ public class OrderService {
                 existingOrder);
     }
 
+    public Order updateStatus(
+            Long id,
+            String status) {
+
+        Order order =
+                getOrderById(id);
+
+        order.setStatus(
+                status);
+
+        return orderRepo.save(
+                order);
+    }
+
     public void deleteOrder(
             Long id) {
 
         Order order =
                 getOrderById(id);
 
-        orderRepo.delete(order);
+        orderRepo.delete(
+                order);
     }
 }
